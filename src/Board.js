@@ -147,15 +147,12 @@
       let tmpArr = new Array();
 
       for(var key = 0; key <= this.attributes.n - 1 ; key++){
-        console.log('start:',start)
         if(majorDiagonalColumnIndexAtFirstRow === 0){
           tmpArr.push(this.attributes[key][key]);
         }else{          
           if(start <= this.attributes.n - 1){
             tmpArr.push(this.attributes[key][start++]);
            // this.attributes[key][--lower] = 'edit' this for the other
-            //tmpArr.push();
-             // 
           }
           if (key > 0 ){
             tmpArr.push(this.attributes[key][key-1])
@@ -165,9 +162,6 @@
 
       conflictCheck = tmpArr.filter((elem)=> elem === 1).length > 1;
 
-      // console.log({majorDiagonalColumnIndexAtFirstRow,
-      //  tmpArr, func: tmpArr.filter(elem => elem === 1), conflictCheck});
-
       return conflictCheck;
     },
 
@@ -176,7 +170,6 @@
       let conflictCheck = false;
 
       for(var index = 0; index <= this.attributes.n - 1 ; index++){
-        console.log(index)
         conflictCheck = conflictCheck || this.hasMajorDiagonalConflictAt(index);
       }
 
@@ -190,12 +183,31 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      let start = minorDiagonalColumnIndexAtFirstRow;
+      // let counter = this.attributes.n ;
+      let counter = minorDiagonalColumnIndexAtFirstRow; // continue 
+      let conflictCheck = false;
+      let tmpArr = new Array();
+
+      for(var key = 0; key <= this.attributes.n - 1 ; key++){
+          // this.attributes[key][--counter] = 'editedddddddddddddd'
+          tmpArr.push(this.attributes[key][--counter]);
+      }
+
+      conflictCheck = tmpArr.filter((elem)=> elem === 1).length > 1;
+
+      return conflictCheck;
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      return false; // fixme
+      let conflictCheck = false;
+
+      for(var index = 0; index <= this.attributes.n - 1 ; index++){
+        conflictCheck = conflictCheck || this.hasMinorDiagonalConflictAt(index);
+      }
+
+      return conflictCheck;  
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
