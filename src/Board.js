@@ -142,25 +142,31 @@
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
       let start = majorDiagonalColumnIndexAtFirstRow;
+      let lower = this.attributes.n-1;
       let conflictCheck = false;
       let tmpArr = new Array();
 
       for(var key = 0; key <= this.attributes.n - 1 ; key++){
+        console.log('start:',start)
         if(majorDiagonalColumnIndexAtFirstRow === 0){
           tmpArr.push(this.attributes[key][key]);
-          // this.attributes[key][key] = 1;
-        }else{
+        }else{          
           if(start <= this.attributes.n - 1){
-            // this.attributes[key][start++] = 1;
             tmpArr.push(this.attributes[key][start++]);
+           // this.attributes[key][--lower] = 'edit' this for the other
+            //tmpArr.push();
+             // 
+          }
+          if (key > 0 ){
+            tmpArr.push(this.attributes[key][key-1])
           }
         }
       }
 
       conflictCheck = tmpArr.filter((elem)=> elem === 1).length > 1;
 
-      console.log({majorDiagonalColumnIndexAtFirstRow,
-       tmpArr, func: tmpArr.filter(elem => elem === 1), conflictCheck});
+      // console.log({majorDiagonalColumnIndexAtFirstRow,
+      //  tmpArr, func: tmpArr.filter(elem => elem === 1), conflictCheck});
 
       return conflictCheck;
     },
@@ -169,7 +175,8 @@
     hasAnyMajorDiagonalConflicts: function() {
       let conflictCheck = false;
 
-      for(var index in this.attributes){
+      for(var index = 0; index <= this.attributes.n - 1 ; index++){
+        console.log(index)
         conflictCheck = conflictCheck || this.hasMajorDiagonalConflictAt(index);
       }
 
