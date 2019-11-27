@@ -112,13 +112,14 @@
     hasColConflictAt: function(colIndex) {
       let conflictCheck = false;
       let tmpArr = [];
-      console.log(this.attributes)
+
       for(var key in this.attributes){
         if(key !== 'n'){
           tmpArr.push(this.attributes[key][colIndex])
         }       
       } 
       conflictCheck = tmpArr.filter((elem)=> elem === 1).length > 1;
+
       return conflictCheck; 
     },
 
@@ -140,12 +141,39 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      let start = majorDiagonalColumnIndexAtFirstRow;
+      let conflictCheck = false;
+      let tmpArr = new Array();
+
+      for(var key = 0; key <= this.attributes.n - 1 ; key++){
+        if(majorDiagonalColumnIndexAtFirstRow === 0){
+          tmpArr.push(this.attributes[key][key]);
+          // this.attributes[key][key] = 1;
+        }else{
+          if(start <= this.attributes.n - 1){
+            // this.attributes[key][start++] = 1;
+            tmpArr.push(this.attributes[key][start++]);
+          }
+        }
+      }
+
+      conflictCheck = tmpArr.filter((elem)=> elem === 1).length > 1;
+
+      console.log({majorDiagonalColumnIndexAtFirstRow,
+       tmpArr, func: tmpArr.filter(elem => elem === 1), conflictCheck});
+
+      return conflictCheck;
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      return false; // fixme
+      let conflictCheck = false;
+
+      for(var index in this.attributes){
+        conflictCheck = conflictCheck || this.hasMajorDiagonalConflictAt(index);
+      }
+
+      return conflictCheck;      
     },
 
 
