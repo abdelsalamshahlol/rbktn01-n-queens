@@ -79,12 +79,23 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      if(rowIndex > this.attributes.n){
+        return 'Invalid Row Index';
+      }
+
+      let conflictCheck = this.attributes[rowIndex].filter((elem)=> elem === 1).length > 1;
+      return conflictCheck; 
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      return false; // fixme
+      let conflictCheck = true;
+
+      for(var index in this.attributes){
+        conflictCheck = conflictCheck || this.hasRowConflictAt(index);
+      }
+
+      return conflictCheck; // fixme
     },
 
 
