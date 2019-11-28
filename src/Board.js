@@ -141,9 +141,9 @@
           // this.attributes[c][c] = 3;
           c++;
         }
-        if(l < i){
-          tmpArr.push(this.attributes[l][i]);
-          // this.attributes[l][i] = 4;
+        if(l < i && this.attributes[l][i] !== undefined){
+          // tmpArr.push(this.attributes[l][i]);
+          this.attributes[l][i] = 4;
           // tmpArr.push(this.attributes[i][c++]);
         }
         if(i > l){
