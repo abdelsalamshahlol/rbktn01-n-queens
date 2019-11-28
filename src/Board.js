@@ -79,18 +79,20 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return this.attributes[rowIndex].filter(elem => elem === 1).length > 1;
+      return this.get(rowIndex).reduce((acc, n)=> acc + n) > 0;
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      let test = false;
+      let size = this.get('n');
 
-      for(var i = 0; i < this.attributes.n - 1; i++){
-        test = test || this.hasRowConflictAt(i);
+      for(var i = 0; i < size; i++){
+        if(this.hasRowConflictAt(i)){
+          return true;
+        }
       }
 
-      return test;
+      return false;
     },
 
 
@@ -100,25 +102,11 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      let test = false;
-      let tmpArr = [];
-
-      for(var i = 0; i < this.attributes.n; i++){
-        tmpArr.push(this.attributes[i][colIndex]);
-      }
-
-      return tmpArr.filter(elem => elem === 1).length > 1;
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      let test = false;
 
-      for(var i = 0; i < this.attributes.n - 1; i++){
-        test = test || this.hasColConflictAt(i);
-      }
-
-      return test;
     },
 
 
@@ -128,44 +116,10 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      console.clear()
-      console.log(this.attributes)
-
-      let tmpArr = [];
-      let c = majorDiagonalColumnIndexAtFirstRow;
-      let l = majorDiagonalColumnIndexAtFirstRow;
-
-      for(var i = 0; i < this.attributes.n; i++){
-        if(c <= i && c >0){
-          tmpArr.push(this.attributes[c][c]);
-          // this.attributes[c][c] = 3;
-          c++;
-        }
-        if(l < i && this.attributes[l][i] !== undefined){
-          // tmpArr.push(this.attributes[l][i]);
-          this.attributes[l][i] = 4;
-          // tmpArr.push(this.attributes[i][c++]);
-        }
-        if(i > l){
-          tmpArr.push(this.attributes[i][l]);
-          // this.attributes[i][l] = 5;
-        }
-      }
-
-      console.log(this.attributes)
-      // console.log(tmpArr);
-      return tmpArr.filter(elem => elem === 1).length > 1;
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      let test = false;
-
-      for(var i = 0; i < this.attributes.n; i++){
-        test = test || this.hasMajorDiagonalConflictAt(i);
-      }
-
-      return test;
     },
 
 
