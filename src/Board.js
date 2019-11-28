@@ -128,18 +128,31 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+      console.clear()
+      console.log(this.attributes)
+
       let tmpArr = [];
       let c = majorDiagonalColumnIndexAtFirstRow;
+      let l = majorDiagonalColumnIndexAtFirstRow;
 
       for(var i = 0; i < this.attributes.n; i++){
-        // if(i > 0){
-          tmpArr.push(this.attributes[i][c++]);
-        // }else{
-          // console.log(i)
-          // tmpArr.push(this.attributes[i][i]);
-        // }
+        if(c <= i && c >0){
+          tmpArr.push(this.attributes[c][c]);
+          // this.attributes[c][c] = 3;
+          c++;
+        }
+        if(l < i){
+          tmpArr.push(this.attributes[l][i]);
+          // this.attributes[l][i] = 4;
+          // tmpArr.push(this.attributes[i][c++]);
+        }
+        if(i > l){
+          tmpArr.push(this.attributes[i][l]);
+          // this.attributes[i][l] = 5;
+        }
       }
 
+      console.log(this.attributes)
       // console.log(tmpArr);
       return tmpArr.filter(elem => elem === 1).length > 1;
     },
@@ -149,7 +162,7 @@
       let test = false;
 
       for(var i = 0; i < this.attributes.n; i++){
-        test = test && this.hasMajorDiagonalConflictAt(i);
+        test = test || this.hasMajorDiagonalConflictAt(i);
       }
 
       return test;
