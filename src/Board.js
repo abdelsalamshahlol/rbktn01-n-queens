@@ -188,7 +188,7 @@
         colId--;
       } 
 
-      return count > 1; // fixme
+      return count > 1;
     },
 
     // test if any minor diagonals on this board contain conflicts
